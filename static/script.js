@@ -9,7 +9,6 @@ document.getElementById('theme-toggle').addEventListener('change', () => {
 async function convertTextToSpeech() {
     const text = document.getElementById('text-input').value;
     const language = document.getElementById('language').value;
-    const speed = document.getElementById('speed').value;
 
     if (!text) {
         alert('Please enter some text.');
@@ -30,8 +29,7 @@ async function convertTextToSpeech() {
             },
             body: JSON.stringify({
                 text,
-                language,
-                speed
+                language
             })
         });
 
