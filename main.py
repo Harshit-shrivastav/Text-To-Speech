@@ -7,6 +7,7 @@ from edge_tts import VoicesManager
 from io import BytesIO
 import logging
 import os
+import edge_tts
 from dotenv import load_dotenv
 
 load_dotenv()
