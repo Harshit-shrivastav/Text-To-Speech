@@ -36,11 +36,11 @@
                 </select>
 
                 <label for="speed">Speed:</label>
-                <input type="range" id="speed" min="0.5" max="2" value="1" step="0.1">
+                <input type="range" id="rate" name="rate" min="-50" max="50" step="10" value="0">
 
                 <button id="convert-btn" onclick="convertTextToSpeech()">Generate Audio</button>
             </div>
-
+            
             <div class="progress-bar">
                 <div class="progress-bar-fill"></div>
             </div>
