@@ -17,11 +17,9 @@ async function convertTextToSpeech() {
 
     const progressBar = document.querySelector('.progress-bar');
     const progressBarFill = document.querySelector('.progress-bar-fill');
-    const audioResult = document.getElementById('audio-result');
-
+    
     progressBar.style.display = 'block';
     progressBarFill.style.width = '0%';
-    audioResult.innerHTML = ''; // Clear previous audio if any
 
     try {
         const response = await fetch('/api/tts', {
@@ -31,27 +29,20 @@ async function convertTextToSpeech() {
             },
             body: JSON.stringify({
                 text,
-                language,
+                language
             })
         });
 
         const audioBlob = await response.blob();
         const audioUrl = URL.createObjectURL(audioBlob);
 
-        audioResult.innerHTML = `
+        document.getElementById('audio-result').innerHTML = `
             <audio controls>
                 <source src="${audioUrl}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
         `;
-        
         progressBarFill.style.width = '100%';
-
-        // Hide the progress bar only
-        setTimeout(() => {
-            progressBar.style.display = 'none';
-        }, 500);
-        
     } catch (error) {
         alert('Error generating audio.');
         progressBar.style.display = 'none';
