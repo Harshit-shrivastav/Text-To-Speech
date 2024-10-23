@@ -25,10 +25,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 class TTSRequest(BaseModel):
     text: str
     language: str
-    speed: int
+    speed: str
 
-async def get_edge_tts(text: str, speaker: str, speed: int) -> bytes:
-    async def async_generate_audio(text: str, speaker: str, speed: int) -> bytes:
+async def get_edge_tts(text: str, speaker: str, speed: str) -> bytes:
+    async def async_generate_audio(text: str, speaker: str, speed: str) -> bytes:
         try:
             communicate = edge_tts.Communicate(text, speaker, rate=speed)
             audio_data = b''
