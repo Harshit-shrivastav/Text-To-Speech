@@ -1,4 +1,4 @@
-/* Global Reset */
+/* Reset and Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -7,21 +7,31 @@
 }
 
 body {
-    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-    color: #333;
-    transition: background 0.5s, color 0.5s;
+    background: linear-gradient(135deg, #89CFF0, #FFB6C1);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+/* Color Themes */
+:root {
+    --primary-color: #008080; /* Teal */
+    --accent-color: #FF6F61;  /* Coral */
+    --bg-color: #F5F5F5;     /* Light Gray */
+    --text-color: #333;       /* Dark Gray */
+    --progress-color: #008080;
 }
 
 [data-theme="dark"] {
-    background: linear-gradient(120deg, #2c3e50 0%, #4ca1af 100%);
-    color: #f5f5f5;
+    background: linear-gradient(135deg, #1f1f1f, #333);
+    --text-color: #F5F5F5;
+    --progress-color: #FF6F61;
 }
 
 /* Navbar */
 .navbar {
-    background: #1d4350;
+    background-color: var(--primary-color);
     padding: 1rem;
     color: white;
 }
@@ -34,6 +44,53 @@ body {
 
 .brand h1 {
     font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Switch (Theme Toggle) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
 }
 
 /* Main Content */
@@ -45,15 +102,17 @@ body {
 .content {
     max-width: 700px;
     margin: 0 auto;
-    background: white;
+    background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 h2 {
     font-size: 2rem;
-    color: #1d4350;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
 }
 
 textarea {
@@ -64,24 +123,40 @@ textarea {
     border-radius: 5px;
     margin-bottom: 1rem;
     font-size: 1rem;
+    resize: none;
 }
 
 .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
 }
 
+.controls label {
+    margin-right: 0.5rem;
+}
+
+.controls select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
 button {
-    background: linear-gradient(90deg, #f83600, #f9d423);
+    background-color: var(--accent-color);
     color: white;
     padding: 0.8rem 1.5rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background: linear-gradient(90deg, #e73800, #f29c35);
+    background-color: #e1554a;
 }
 
 /* Progress Bar */
@@ -91,33 +166,78 @@ button:hover {
     border-radius: 5px;
     height: 10px;
     display: none;
+    margin-top: 1rem;
 }
 
 .progress-bar-fill {
-    background-color: #1d4350;
+    background-color: var(--progress-color);
     height: 100%;
     width: 0;
     border-radius: 5px;
     transition: width 0.3s ease;
 }
 
+/* Audio Section */
+.audio-section {
+    margin-top: 1.5rem;
+}
+
+audio {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
 /* Footer */
 .footer {
-    background: #1d4350;
+    background-color: var(--primary-color);
     color: white;
-    padding: 1rem;
+    padding: 1rem 0;
     text-align: center;
 }
 
-/* Responsive Design */
+/* Responsive Design - Media Queries */
 @media (max-width: 768px) {
     .content {
         max-width: 90%;
+        padding: 1.5rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .controls label, .controls select {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    audio {
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
     .brand h1 {
         font-size: 1.2rem;
+    }
+
+    .toggle-theme {
+        transform: scale(0.8);
     }
 }
