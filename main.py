@@ -5,6 +5,13 @@ from pydantic import BaseModel
 import asyncio
 from edge_tts import VoicesManager
 from io import BytesIO
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+PORT = os.environ.get('PORT', 8000)
 
 app = FastAPI()
 
@@ -48,3 +55,7 @@ async def tts(request: TTSRequest):
 async def read_root():
     with open("static/index.html") as f:
         return HTMLResponse(content=f.read())
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=PORT)
