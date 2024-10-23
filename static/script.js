@@ -29,7 +29,7 @@ async function convertTextToSpeech() {
             },
             body: JSON.stringify({
                 text,
-                language
+                language,
             })
         });
 
@@ -42,7 +42,13 @@ async function convertTextToSpeech() {
                 Your browser does not support the audio element.
             </audio>
         `;
+        
         progressBarFill.style.width = '100%';
+
+        // Hide the progress bar once audio generation is complete
+        setTimeout(() => {
+            progressBar.style.display = 'none';
+        }, 500);
     } catch (error) {
         alert('Error generating audio.');
         progressBar.style.display = 'none';
