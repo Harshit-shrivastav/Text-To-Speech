@@ -7,16 +7,33 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+:root {
+    --bg-color: #f0f4f8;
+    --text-color: #333;
+    --primary-color: #007BFF;
+    --progress-color: #007BFF;
+    --navbar-bg-color: #007BFF;
+}
+
+[data-theme="dark"] {
+    --bg-color: #2d2d2d;
+    --text-color: #f0f4f8;
+    --primary-color: #1e90ff;
+    --progress-color: #1e90ff;
+    --navbar-bg-color: #1e90ff;
 }
 
 /* Navbar Styles */
 .navbar {
-    background-color: #007BFF;
+    background-color: var(--navbar-bg-color);
     padding: 1rem 2rem;
     text-align: center;
+    position: relative;
 }
 
 .navbar-container {
@@ -33,19 +50,88 @@ body {
     font-weight: bold;
 }
 
-#theme-toggle {
-    background: white;
-    color: #007BFF;
+.menu-btn {
+    background-color: var(--primary-color);
+    color: white;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
 }
 
-#theme-toggle:hover {
-    background-color: #e0e0e0;
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background-color: var(--navbar-bg-color);
+    list-style: none;
+    padding: 1rem;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.dropdown-menu li a {
+    color: white;
+    text-decoration: none;
+}
+
+.menu-btn:hover + .dropdown-menu,
+.dropdown-menu:hover {
+    display: block;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* Rounded slider */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
 /* Main Section */
@@ -57,12 +143,13 @@ main {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 h2 {
     margin-bottom: 1rem;
     font-size: 1.8rem;
-    color: #007BFF;
+    color: var(--primary-color);
 }
 
 textarea {
@@ -74,23 +161,8 @@ textarea {
     margin-bottom: 1rem;
 }
 
-.language-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-select {
-    padding: 0.5rem;
-    width: 100%;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-}
-
 #convert-btn {
-    background-color: #007BFF;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     padding: 1rem;
@@ -105,17 +177,27 @@ select {
     background-color: #0056b3;
 }
 
-.audio-section {
-    margin-top: 1.5rem;
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    margin: 1rem 0;
+    display: none;
+    height: 20px;
 }
 
-audio {
-    width: 100%;
+.progress-bar-fill {
+    background-color: var(--progress-color);
+    height: 100%;
+    width: 0;
+    border-radius: 8px;
+    transition: width 0.5s ease;
 }
 
 /* Footer */
 .footer {
-    background-color: #007BFF;
+    background-color: var(--primary-color);
     color: white;
     text-align: center;
     padding: 1rem 0;
@@ -136,9 +218,5 @@ audio {
 @media only screen and (max-width: 768px) {
     .navbar-container {
         flex-direction: column;
-    }
-
-    textarea {
-        height: 150px;
     }
 }
