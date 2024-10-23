@@ -49,7 +49,7 @@ async def get_edge_tts(text: str, speaker: str, speed: float) -> bytes:
 async def tts(request: TTSRequest):
     text = request.text
     speaker = request.language
-    speed = request.speed
+    speed = str(request.speed)
     audio_data = await get_edge_tts(text, speaker, speed)
     if not audio_data:
         return {"error": "Audio generation failed"}
