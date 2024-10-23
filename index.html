@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech Converter</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <h1 class="brand">Text to Speech Converter</h1>
+            <button id="theme-toggle">Dark Mode</button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="converter-section">
+            <h2>Convert Text to Speech</h2>
+            <textarea id="text-input" rows="6" placeholder="Enter text here..."></textarea>
+
+            <label for="language" class="language-label">Choose a language:</label>
+            <select id="language">
+                <option value="en-US-AriaNeural">English (US) - Aria</option>
+                <option value="zh-CN-XiaoxiaoNeural">Chinese (Simplified) - Xiaoxiao</option>
+                <option value="de-DE-KatjaNeural">German - Katja</option>
+                <option value="fr-FR-DeniseNeural">French - Denise</option>
+                <option value="es-ES-ElviraNeural">Spanish (Spain) - Elvira</option>
+                <option value="it-IT-ElsaNeural">Italian - Elsa</option>
+                <option value="ja-JP-AoiNeural">Japanese - Aoi</option>
+                <option value="ko-KR-SunHiNeural">Korean - SunHi</option>
+                <option value="ru-RU-SvetlanaNeural">Russian - Svetlana</option>
+                <option value="pt-BR-FranciscaNeural">Portuguese (Brazil) - Francisca</option>
+                <option value="hi-IN-SwaraNeural">Hindi - Swara</option>
+                <option value="ar-EG-SalmaNeural">Arabic (Egypt) - Salma</option>
+                <!-- will insert more languages here soon -->
+            </select>
+
+            <button id="convert-btn" onclick="convertTextToSpeech()">Convert to Speech</button>
+        </section>
+
+        <section id="audio-result" class="audio-section">
+            <!-- Audio result will be rendered here -->
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Text to Speech Converter. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Terms and Conditions</a>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
