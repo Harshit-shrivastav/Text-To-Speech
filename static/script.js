@@ -9,15 +9,12 @@ document.getElementById('theme-toggle').addEventListener('change', () => {
 async function convertTextToSpeech() {
     const text = document.getElementById('text-input').value;
     const language = document.getElementById('language').value;
-    let speed = document.getElementById('speed').value;
+    const speed = document.getElementById('speed').value;
 
     if (!text) {
         alert('Please enter some text.');
         return;
     }
-
-    // Convert speed to percentage format for edge-tts (e.g., "-50%")
-    speed = `${speed}%`;
 
     const progressBar = document.querySelector('.progress-bar');
     const progressBarFill = document.querySelector('.progress-bar-fill');
@@ -34,7 +31,7 @@ async function convertTextToSpeech() {
             body: JSON.stringify({
                 text,
                 language,
-                speed  // Send the formatted speed value
+                speed
             })
         });
 
@@ -48,11 +45,6 @@ async function convertTextToSpeech() {
             </audio>
         `;
         progressBarFill.style.width = '100%';
-
-        // Hide the progress bar when the generation completes
-        setTimeout(() => {
-            progressBar.style.display = 'none';
-        }, 500);
     } catch (error) {
         alert('Error generating audio.');
         progressBar.style.display = 'none';
