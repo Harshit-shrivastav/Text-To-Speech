@@ -16,29 +16,37 @@ async function convertTextToSpeech() {
         return;
     }
 
-    // Show progress bar
-    const progressBar = document.getElementById('progress-bar');
+    const progressBar = document.querySelector('.progress-bar');
+    const progressBarFill = document.querySelector('.progress-bar-fill');
+    
     progressBar.style.display = 'block';
+    progressBarFill.style.width = '0%';
 
-    const response = await fetch('/api/tts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ text, language, speed }),
-    });
+    try {
+        const response = await fetch('/api/tts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text,
+                language,
+                speed
+            })
+        });
 
-    if (response.ok) {
         const audioBlob = await response.blob();
-        const audioURL = URL.createObjectURL(audioBlob);
+        const audioUrl = URL.createObjectURL(audioBlob);
 
-        // Hide progress bar
-        progressBar.style.display = 'none';
-
-        const audioSection = document.getElementById('audio-result');
-        audioSection.innerHTML = `<audio controls src="${audioURL}" playbackRate="${speed}"></audio>`;
-    } else {
-        alert('Error in converting text to speech.');
+        document.getElementById('audio-result').innerHTML = `
+            <audio controls>
+                <source src="${audioUrl}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        `;
+        progressBarFill.style.width = '100%';
+    } catch (error) {
+        alert('Error generating audio.');
         progressBar.style.display = 'none';
     }
 }
