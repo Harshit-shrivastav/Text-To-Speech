@@ -25,22 +25,23 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 class TTSRequest(BaseModel):
     text: str
     language: str
+    speed: float
 
-async def get_edge_tts(text: str, speaker: str) -> bytes:
-    async def async_generate_audio(text: str, speaker: str) -> bytes:
+async def get_edge_tts(text: str, speaker: str, speed: float) -> bytes:
+    async def async_generate_audio(text: str, speaker: str, speed: float) -> bytes:
         try:
-            communicate = edge_tts.Communicate(text, speaker)
+            communicate = edge_tts.Communicate(text, speaker, rate=speed)
             audio_data = b''
             async for chunk in communicate.stream():
                 if chunk["type"] == "audio":
                     audio_data += chunk["data"]
             return audio_data
         except Exception as e:
-            print("Error generating audio using edge_tts:", e)
+            logger.error("Error generating audio: %s", e)
             raise
 
     try:
-        return await async_generate_audio(text, speaker)
+        return await async_generate_audio(text, speaker, speed)
     except Exception as e:
         return b""
 
@@ -48,7 +49,8 @@ async def get_edge_tts(text: str, speaker: str) -> bytes:
 async def tts(request: TTSRequest):
     text = request.text
     speaker = request.language
-    audio_data = await get_edge_tts(text, speaker)
+    speed = request.speed
+    audio_data = await get_edge_tts(text, speaker, speed)
     if not audio_data:
         return {"error": "Audio generation failed"}
 
